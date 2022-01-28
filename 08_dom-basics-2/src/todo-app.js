@@ -101,7 +101,7 @@
 				{
 					for(let i = 0 ; i < todoListData.length ; i++) 
 					{
-						if(todoListData[i].data.todo_name === todoItem.data.todo_name) 
+						if(todoListData[i].item === todoItem.item) 
 						{
 							todoListData.splice(i, 1);
 							break;
@@ -134,7 +134,7 @@
 		if(initData === null) {
 			initData = loadData(title);
 		}
-		
+
 		initTodoList(initData, todoList, todoData);
 
 		
@@ -162,7 +162,7 @@
 			todoItem.deleteBtn.addEventListener('click', function() {
 				if(confirm('Вы уверены?')) {
 					for(let i = 0 ; i < todoData.length ; i++) {
-						if(todoData[i].data.todo_name === todoItem.data.todo_name) {
+						if(todoData[i].item === todoItem.item) {
 							todoData.splice(i, 1);
 							break;
 						}
