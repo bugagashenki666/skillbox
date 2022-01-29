@@ -11,7 +11,13 @@
   <script defer src="src/todo-app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      createTodoApp(document.getElementById('todo-app'), document.querySelector('.nav'));
+      let tasks = localStorage['myTodos']?JSON.parse(localStorage['myTodos']):[
+        {todo_name:'Балбесничать', done:true},
+        {todo_name:'разгильдяйничать', done:true},
+        {todo_name:'сделать домашнее задание по JavaScript', done:false},
+      ];
+      if(!localStorage['myTodos'])localStorage['myTodos'] = JSON.stringify(tasks);
+      createTodoApp(document.getElementById('todo-app'), document.querySelector('.nav'), tasks);
     });
   </script>
 </head>

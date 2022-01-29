@@ -87,7 +87,7 @@
 		localStorage.setItem(key, JSON.stringify(necessaryData));
 	}
 
-	function initTodoList(todoData, list, todoListData) {
+	function initTodoList(todoData, list, todoListData, key) {
 		if(todoData === null) {
 			return;
 		}
@@ -97,7 +97,7 @@
 			let todoItem = createTodoItem(todoData[i].todo_name, todoData[i].done);
 			todoItem.deleteBtn.onclick = () => 
 			{
-				if(confirm('Вы уверены?')) 
+				if(confirm('Вы уверены?'))
 				{
 					for(let i = 0 ; i < todoListData.length ; i++) 
 					{
@@ -107,6 +107,9 @@
 							break;
 						}
 					}
+					console.log(localStorage[key]);
+					saveData(key, todoListData);
+					console.log(localStorage[key]);
 					todoItem.item.remove();
 				}
 			};
@@ -114,6 +117,9 @@
 			todoItem.doneBtn.onclick = () => {
 				todoItem.item.classList.toggle('list-group-item-success');
 				todoItem.data.done = !todoItem.data.done;
+				console.log(localStorage[key]);
+				saveData(key, todoListData);
+				console.log(localStorage[key]);
 			};
 
 			list.append(todoItem.item);
@@ -121,7 +127,7 @@
 		}
 	}
 
-	function createTodoApp(container, nav, initData=null, title='Мои дела') {
+	function createTodoApp(container, nav, initData=null, title='Мои дела', key='myTodos') {
 		let todoAppTitle = createAppTitle(title);
 		let todoItemForm = createTodoItemForm();
 		let todoList = createTodoList();
@@ -132,14 +138,14 @@
 		container.append(todoList);
 
 		if(initData === null) {
-			initData = loadData(title);
+			initData = loadData(key);
 		}
 
-		initTodoList(initData, todoList, todoData);
+		initTodoList(initData, todoList, todoData, key);
 
 		
 		nav.onclick = () => {
-			saveData(title, todoData);
+			saveData(key, todoData);
 		};
 
 		todoItemForm.form.addEventListener('submit', function(e) {
@@ -156,7 +162,9 @@
 			todoItem.doneBtn.addEventListener('click', function() {
 				todoItem.item.classList.toggle('list-group-item-success');
 				todoItem.data.done = !todoItem.data.done;
-				console.log(todoData);
+				console.log(localStorage[key]);
+				saveData(key, todoData);
+				console.log(localStorage[key]);
 			});
 
 			todoItem.deleteBtn.addEventListener('click', function() {
@@ -167,8 +175,10 @@
 							break;
 						}
 					}
+					console.log(localStorage[key]);
+					saveData(key, todoData);
+					console.log(localStorage[key]);
 					todoItem.item.remove();
-					console.log(todoData);
 				}
 			});
 
