@@ -124,6 +124,9 @@
 
 			list.append(todoItem.item);
 			todoListData.push(todoItem);
+			console.log(localStorage[key]);
+			saveData(key, todoListData);
+			console.log(localStorage[key]);
 		}
 	}
 
@@ -158,6 +161,10 @@
 
 			let todoItem = createTodoItem(todoItemForm.input.value);
 			todoData.push(todoItem);
+			
+			console.log(localStorage[key]);
+			saveData(key, todoData);
+			console.log(localStorage[key]);
 
 			todoItem.doneBtn.addEventListener('click', function() {
 				todoItem.item.classList.toggle('list-group-item-success');
