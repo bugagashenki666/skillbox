@@ -11,7 +11,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items:stretch;
+    align-items: stretch;
     width: 90vw;
     height: 90vh;
     margin: auto auto;
@@ -24,11 +24,12 @@
     border: 1px solid red;
     text-align: center;
     vertical-align: middle;
-    font-size: 90px;
+    font-size: 1rem;
     font-weight: 800;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .close {
@@ -36,7 +37,18 @@
     background-color: royalblue;
 }
 
-.open {
+.matched {
     color: black;
     background-color: transparent;
+}
+
+.btn {
+    text-align: center;
+    padding: 5px 10px;
+    margin: 0 auto;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
 }
