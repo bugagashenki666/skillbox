@@ -1,0 +1,42 @@
+:root {
+    --amount-of-cols: 4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items:stretch;
+    width: 90vw;
+    height: 90vh;
+    margin: auto auto;
+    padding: 10px;
+}
+
+.card {
+    width: calc((100% - 20px * (var(--amount-of-cols) - 1))/var(--amount-of-cols));
+    height: calc((100% - 20px * (var(--amount-of-cols) - 1))/var(--amount-of-cols));
+    border: 1px solid red;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 90px;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    color: transparent;
+    background-color: royalblue;
+}
+
+.open {
+    color: black;
+    background-color: transparent;
+}
