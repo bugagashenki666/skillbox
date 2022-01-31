@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
-    function createButtonNewGame() {
+    function createButtonNewGame(n) {
         if (document.querySelector('button') !== null) return;
         let btnContainer = document.querySelector('.btn-container');
         let btn = document.createElement('button');
@@ -54,12 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btnContainer.append(btn);
         btn.onclick = () => {
             document.querySelector('.container').innerHTML = '';
-            createPairsApp(document.querySelector('.container'), generatePairs(4));
+            createPairsApp(document.querySelector('.container'), generatePairs(n), n);
             document.querySelector('.btn-container').innerHTML = '';
         };
     }
 
-    function createCard(num) {
+    function createCard(num, n) {
         let card = document.createElement('div');
         card.classList.add('card', 'close');
         card.textContent = num;
@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.classList.toggle('close');
             }
             if (checkGameOver()) {
-                createButtonNewGame();
+                createButtonNewGame(n);
+                pair = { one: null, two: null };
                 return;
             }
         };
@@ -94,13 +95,68 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    let container = document.querySelector('.container');
-
-    function createPairsApp(container, pairs) {
-        for (const i of pairs) {
-            container.append(createCard(i));
+    function showAll() {
+        let cards = document.querySelectorAll('.card');
+        for (const card of cards) {
+            card.classList.remove('close');
         }
     }
 
-    createPairsApp(container, generatePairs(4));
+    let container = document.querySelector('.container');
+
+    function createPairsApp(container, pairs, n) {
+        let timer = document.querySelector('.timer');
+        timer.innerText = '60';
+        let timeintervalId = setInterval(function() {
+            if (timer.innerText === '0') {
+                timer.innerText = 'GAME OVER';
+                showAll();
+                createButtonNewGame(n);
+                clearInterval(timeintervalId);
+                pair = { one: null, two: null };
+                return;
+            }
+            if (checkGameOver()) {
+                timer.innerText = 'YOU HAVE JUST WON';
+                createButtonNewGame(n);
+                pair = { one: null, two: null };
+                clearInterval(timeintervalId);
+                return;
+            }
+            timer.innerText = parseInt(timer.innerText) - 1;
+        }, 1000);
+        for (const i of pairs) {
+            container.append(createCard(i, n));
+        }
+    }
+
+    function createFormSettings() {
+        let form = document.createElement('form');
+        let input = document.createElement('input');
+        input.type = 'number';
+        input.value = 4;
+        let btn = document.createElement('button');
+        btn.textContent = 'Начать игру';
+        form.append(input);
+        form.append(btn);
+        document.querySelector('.container').append(form);
+        input.onchange = function() {
+            setTimeout(() => {
+                if (input.value < 2 || input.value > 10 || input.value % 2 === 1) input.value = 4;
+            }, 600);
+        };
+        btn.onclick = () => {
+            let n = input.value;
+            document.querySelector('.container').innerHTML = '';
+            let root = document.querySelector(':root');
+            root.style.setProperty('--amount-of-cols', n);
+            createPairsApp(document.querySelector('.container'), generatePairs(n), n);
+        };
+    }
+
+    function setUp() {
+        createFormSettings();
+    }
+
+    setUp();
 });
