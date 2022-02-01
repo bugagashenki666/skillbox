@@ -19,8 +19,8 @@
 }
 
 .card {
-    width: calc((100% - 20px * (var(--amount-of-cols) - 1))/var(--amount-of-cols));
-    height: calc((100% - 20px * (var(--amount-of-cols) - 1))/var(--amount-of-cols));
+    width: calc((100% - 2px * (var(--amount-of-cols) - 1))/var(--amount-of-cols));
+    height: calc((100% - 2px * (var(--amount-of-cols) - 1))/var(--amount-of-cols));
     border: 1px solid red;
     text-align: center;
     vertical-align: middle;

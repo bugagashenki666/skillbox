@@ -135,6 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let input = document.createElement('input');
         input.type = 'number';
         input.value = 4;
+		input.max = 16;
+		input.min = 2;
         let btn = document.createElement('button');
         btn.textContent = 'Начать игру';
         form.append(input);
@@ -142,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.container').append(form);
         input.onchange = function() {
             setTimeout(() => {
-                if (input.value < 2 || input.value > 10 || input.value % 2 === 1) input.value = 4;
+                if (input.value < 2 || input.value > 16 || input.value % 2 === 1) input.value = 4;
             }, 600);
         };
         btn.onclick = () => {
