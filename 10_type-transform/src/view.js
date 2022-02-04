@@ -84,7 +84,7 @@ window.viewStudents = {
                                 (${(new Date()).getFullYear() - studentData.bornDate.getFullYear()})</td>
 								<td>${studentData.startYear}-${studentData.startYear + 4} 
 										(${this.isEducated(studentData.startYear)})</td>
-							</tr>`;
+				</tr>`;
     },
 
     showFilter: function() {
@@ -93,5 +93,9 @@ window.viewStudents = {
 
     showNewStudentForm: function() {
 
+    },
+
+    renderButtonNewStudent: function() {
+        let btnNewStudent = `<button>Создать студента</button>`;
     },
 };
