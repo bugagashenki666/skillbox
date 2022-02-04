@@ -8,20 +8,26 @@ window.viewStudents = {
         </tr>
     </thead>`,
 
-    fioClick: function() {
+    controller: null,
 
+    setController: function(controller) {
+        this.controller = controller;
+    },
+
+    fioClick: function() {
+        console.log('fioClick');
     },
 
     facClick: function() {
-
+        console.log('facClick');
     },
 
     ageClick: function() {
-
+        console.log('ageClick');
     },
 
     yearsClick: function() {
-
+        console.log('yearsClick');
     },
 
     setHandler: function(object, event, observer) {
@@ -29,18 +35,18 @@ window.viewStudents = {
     },
 
     showTable: function(container, studentsData) {
-        container.innerHTML = this.renderStudentsTable(container, studentsData);
+        container.innerHTML = this.renderStudentsTable(studentsData);
         this.setHandler(document.querySelector('.fio'), 'click', this.fioClick);
         this.setHandler(document.querySelector('.fac'), 'click', this.facClick);
         this.setHandler(document.querySelector('.age'), 'click', this.ageClick);
         this.setHandler(document.querySelector('.years'), 'click', this.yearsClick);
     },
 
-    renderStudentsTable: function(container, studentsData) {
+    renderStudentsTable: function(studentsData) {
         const table = `<table class="table table-striped">` +
             this.renderHeader() +
             this.renderRows(studentsData) +
-            `</table`;
+            `</table>`;
         return table;
     },
 
@@ -91,11 +97,16 @@ window.viewStudents = {
 
     },
 
-    showNewStudentForm: function() {
-
+    showNewStudentForm: function(container) {
+        container.innerHTML = this.renderButtonNewStudent();
+        this.setHandler(container.querySelector('.btn-new-student'), 'click', this.newStudentClick);
     },
 
     renderButtonNewStudent: function() {
-        let btnNewStudent = `<button>Создать студента</button>`;
+        return `<button class="btn btn-primary btn-new-student">Создать студента</button>`;
     },
+
+    newStudentClick: function() {
+        console.log('newStudentClick');
+    }
 };

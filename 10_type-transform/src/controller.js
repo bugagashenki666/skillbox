@@ -1,6 +1,7 @@
 window.controllerStudents = {
     execute: function(model, view) {
-        let container = document.querySelector('.container');
-        view.showTable(container, model.students);
+        view.setController(this);
+        view.showTable(document.querySelector('.table-container'), model.students);
+        view.showNewStudentForm(document.querySelector('.form-new-student-container'));
     },
 };
