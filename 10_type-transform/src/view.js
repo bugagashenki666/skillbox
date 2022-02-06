@@ -1,3 +1,17 @@
+window.formatDate = function(date, div = '.', order = 'asc') {
+
+    var dd = date.getDate();
+    if (dd < 10) dd = '0' + dd;
+
+    var mm = date.getMonth() + 1;
+    if (mm < 10) mm = '0' + mm;
+
+    var yyyy = date.getFullYear();
+    if (order === 'asc') return dd + div + mm + div + yyyy;
+    if (order === 'desc') return yyyy + div + mm + div + dd;
+    return dd + div + mm + div + yyyy;
+};
+
 window.viewStudents = {
     HEADER: `<thead>
         <tr>
@@ -7,6 +21,72 @@ window.viewStudents = {
           <th class="years" role="button">Годы обучения</th>
         </tr>
     </thead>`,
+
+    FORM_CREATE_STUDENT: `<form class="row mb-3">
+									<fieldset>
+									<legend>Новый студент</legend>
+									<div class="mb-3 row">
+                    <label for="fname" class="col-sm-2 col-form-label">Имя*</label>
+										<div class="col-sm-10 w-50">
+											<input type="text" class="new-first-name form-control w-50" placeholder="Имя*" id="fname" name="fname" required>
+										</div>
+										<div class="col-sm-10 text-danger error-fname w-25">
+										</div>
+									</div>
+									<div class="mb-3 row">
+									<label for="patronymic" class="col-sm-2 col-form-label">Отчество*</label>
+									<div class="col-sm-10 w-50">
+										<input type="text" class="new-patronymic form-control w-50" placeholder="Отчество*" id="patronymic" name="patronymic" required>
+									</div>
+									<div class="col-sm-10 w-25 text-danger error-patronymic">
+										</div>
+									</div>
+									<div class="mb-3 row">
+									<label for="lname" class="col-sm-2 col-form-label">Фамилия*</label>
+									<div class="col-sm-10 w-50">
+										<input type="text" class="new-last-name form-control w-50" placeholder="Фамилия*" id="lname" name="lname" required>
+									</div>
+									<div class="col-sm-10 w-25 text-danger error-lname">
+										</div>
+									</div>
+									<div class="mb-3 row">
+									<label for="born" class="col-sm-2 col-form-label">Дата рождения*</label>
+									<div class="col-sm-10 w-50">
+										<input type="date" class="new-born-date form-control w-25" placeholder="дата рождения*" id="born" name="born" value="2000-01-01" min="1900-01-01" max="` + formatDate(new Date(), '-', 'desc') + `" required>
+									</div>
+									<div class="col-sm-10 w-25 text-danger error-born-date">
+										</div>
+									</div>
+									<div class="mb-3 row">
+									<label for="start" class="col-sm-2 col-form-label">Год начала обучения*</label>
+									<div class="col-sm-10 w-50">
+										<input type="number" class="new-start-year form-control w-25" name="start" min="2000" max="` + new Date().getFullYear() + `" placeholder="Год начала обучения*" id="start" value="2010" required>
+									</div>
+									<div class="col-sm-10 w-25 text-danger error-start-year">
+										</div>
+									</div>
+									<div class="mb-3 row">
+									<label for="fac" class="col-sm-2 col-form-label">Факультет*</label>
+									<div class="col-sm-10 w-50">
+										<input type="text" class="new-facultet form-control w-50" placeholder="Факультет*" id="fac" name="fac" required>
+									</div>
+									<div class="col-sm-10 w-25 text-danger error-fac">
+										</div>
+									</div>
+									<div class="mb-3">
+										<button type="submit" class="btn btn-primary mb-3 btn-create-new-student w-25 btn-lg">Создать</button>
+									</div>
+									</fieldset>
+		</form>`,
+
+    getValueName: function(amount) {
+        let lastCharAmount = String(amount).substring(String(amount).length - 1, String(amount).length);
+        if (5 <= amount && amount <= 20) return 'лет';
+        if (lastCharAmount === '1') return 'год';
+        if (2 <= lastCharAmount && lastCharAmount <= 4) return 'года';
+        if ((5 <= lastCharAmount && lastCharAmount <= 9) ||
+            lastCharAmount === '0') return 'лет';
+    },
 
     controller: null,
 
@@ -62,19 +142,6 @@ window.viewStudents = {
         return result;
     },
 
-    formatDate: function(date) {
-
-        var dd = date.getDate();
-        if (dd < 10) dd = '0' + dd;
-
-        var mm = date.getMonth() + 1;
-        if (mm < 10) mm = '0' + mm;
-
-        var yyyy = date.getFullYear();
-
-        return dd + '.' + mm + '.' + yyyy;
-    },
-
     isEducated: function(checkedYear) {
         let now = new Date();
         if (checkedYear + 4 < now.getFullYear()) return "закончил";
@@ -83,11 +150,12 @@ window.viewStudents = {
     },
 
     renderRow: function(studentData) {
+        let amountFullYears = (new Date()).getFullYear() - studentData.bornDate.getFullYear();
         return `<tr>
 								<td>${studentData.lastName} ${studentData.firstName} ${studentData.patronymic}</td>
 								<td>${studentData.fac}</td>
-								<td>${this.formatDate(studentData.bornDate)}
-                                (${(new Date()).getFullYear() - studentData.bornDate.getFullYear()})</td>
+								<td>${formatDate(studentData.bornDate)}
+                                (${amountFullYears} ${this.getValueName(amountFullYears)})</td>
 								<td>${studentData.startYear}-${studentData.startYear + 4} 
 										(${this.isEducated(studentData.startYear)})</td>
 				</tr>`;
@@ -103,38 +171,17 @@ window.viewStudents = {
     },
 
     renderButtonNewStudent: function() {
-        return `<button class="btn btn-primary btn-new-student">Создать студента</button>`;
+        return `<button class="btn btn-primary btn-new-student btn-lg">Создать студента</button>`;
     },
 
     newStudentClick: function() {
         console.log('newStudentClick');
+
         viewStudents.showFormNewStudent();
     },
 
     renderFormNewStudent: function() {
-        return `<form>
-									<div class="mb-3">
-										<input type="text" class="new-first-name form-control" placeholder="Имя">
-									</div>
-									<div class="mb-3">
-										<input type="text" class="new-patronymic form-control" placeholder="Отчество">
-									</div>
-									<div class="mb-3">
-										<input type="text" class="new-last-name form-control" placeholder="Фамилия">
-									</div>
-									<div class="mb-3">
-										<input type="date" class="new-born-date form-control" placeholder="дата рождения">
-									</div>
-									<div class="mb-3">
-										<input type="number" class="new-start-year form-control" min="1960" max="2100" placeholder="Год начала обучения">
-									</div>
-									<div class="mb-3">
-										<input type="text" class="new-facultet form-control" placeholder="Факультет">
-									</div>
-									<div class="mb-3">
-										<button class="btn btn-primary btn-create-new-student">Создать</button>
-									</div>
-								</form>`;
+        return this.FORM_CREATE_STUDENT;
     },
 
     showFormNewStudent: function() {
@@ -144,7 +191,43 @@ window.viewStudents = {
             'click', this.btnCreateStudentClick);
     },
 
-    btnCreateStudentClick: function() {
+    btnCreateStudentClick: function(event) {
+        event.preventDefault();
         console.log('btnCreateStudentClick');
+        let dataNewStudent = viewStudents.getNewStudentData();
+        console.log(dataNewStudent);
+        let error = viewStudents.controller.validator.validate(dataNewStudent);
+        if (error.mistaken) {
+            viewStudents.showMistakes(error);
+            return;
+        }
+        viewStudents.controller.createNewStudent(dataNewStudent);
+        viewStudents.showButtonNewStudent(document.querySelector('.form-new-student-container'));
+    },
+
+    showMistakes: function(error) {
+        if (error.fname) document.querySelector('.error-fname').textContent = error.fname;
+        if (error.patronymic) document.querySelector('.error-patronymic').textContent = error.patronymic;
+        if (error.lname) document.querySelector('.error-lname').textContent = error.lname;
+        if (error.born) document.querySelector('.error-born-date').textContent = error.born;
+        if (error.fac) document.querySelector('.error-fac').textContent = error.fac;
+        if (error.start) document.querySelector('.error-start-year').textContent = error.start;
+    },
+
+    getNewStudentData: function() {
+        let firstName = document.querySelector('.new-first-name');
+        let patronymic = document.querySelector('.new-patronymic');
+        let lastName = document.querySelector('.new-last-name');
+        let newBorn = document.querySelector('.new-born-date');
+        let start = document.querySelector('.new-start-year');
+        let fac = document.querySelector('.new-facultet');
+        return {
+            fname: firstName.value,
+            patr: patronymic.value,
+            lname: lastName.value,
+            born: newBorn.value,
+            scratch: start.value,
+            facultet: fac.value,
+        };
     },
 };

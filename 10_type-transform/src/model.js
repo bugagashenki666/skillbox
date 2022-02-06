@@ -19,7 +19,7 @@ window.modelStudents = {
             firstName: 'Адольф',
             patronymic: 'Алоисович',
             lastName: 'Гутлер',
-            bornDate: new Date(1999, 08, 12),
+            bornDate: new Date(2002, 08, 12),
             startYear: 2018,
             fac: "факультет русофобии и немцефилии",
         },
