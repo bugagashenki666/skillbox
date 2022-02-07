@@ -42,4 +42,45 @@ window.modelStudents = {
         });
         this.controller.execute(this.controller.commands.CMD_REPAINT_TABLE_STUDENTS, this.students);
     },
+
+    orderStudentsByFIO: function() {
+        let result = this.students.slice();
+        result.sort(
+            (a, b) => {
+                let str2 = `${b.lastName} ${b.firstName} ${b.patronymic}`;
+                let str1 = `${a.lastName} ${a.firstName} ${a.patronymic}`;
+                if (str2 < str1) return 1;
+                if (str2 > str1) return -1;
+                return 0;
+            });
+        this.controller.execute(this.controller.commands.CMD_REPAINT_TABLE_STUDENTS, result);
+    },
+
+    orderStudentsByFac: function() {
+        let result = this.students.slice().sort(
+            (a, b) => {
+                let str1 = a.fac;
+                let str2 = b.fac;
+                if (str2 < str1) return 1;
+                if (str2 > str1) return -1;
+                return 0;
+            });
+        this.controller.execute(this.controller.commands.CMD_REPAINT_TABLE_STUDENTS, result);
+    },
+
+    orderStudentsByAge: function() {
+        let result = this.students.slice().sort(
+            (a, b) => {
+                return b.bornDate - a.bornDate;
+            });
+        this.controller.execute(this.controller.commands.CMD_REPAINT_TABLE_STUDENTS, result);
+    },
+
+    orderStudentsByStart: function() {
+        let result = this.students.slice().sort(
+            (a, b) => {
+                return b.startYear - a.startYear;
+            });
+        this.controller.execute(this.controller.commands.CMD_REPAINT_TABLE_STUDENTS, result);
+    },
 };

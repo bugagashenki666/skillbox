@@ -104,18 +104,22 @@ window.viewStudents = {
 
     fioClick: function() {
         console.log('fioClick');
+        controllerStudents.execute(controllerStudents.commands.CMD_ORDER_STUDENTS_BY_FIO);
     },
 
     facClick: function() {
         console.log('facClick');
+        controllerStudents.execute(controllerStudents.commands.CMD_ORDER_STUDENTS_BY_FAC);
     },
 
     ageClick: function() {
         console.log('ageClick');
+        controllerStudents.execute(controllerStudents.commands.CMD_ORDER_STUDENTS_BY_AGE);
     },
 
     yearsClick: function() {
         console.log('yearsClick');
+        controllerStudents.execute(controllerStudents.commands.CMD_ORDER_STUDENTS_BY_START);
     },
 
     setHandler: function(object, event, observer) {
@@ -169,6 +173,10 @@ window.viewStudents = {
 				</tr>`;
     },
 
+    renderCaption: function() {
+        return `<caption>Студенты</caption>`;
+    },
+
     showFilters: function(container) {
 
         container.innerHTML = this.renderFilters();
@@ -204,7 +212,7 @@ window.viewStudents = {
     },
 
     renderButtonNewStudent: function() {
-        return `<button class="btn btn-primary btn-new-student btn-lg">Создать студента</button>`;
+        return `<button class="btn btn-primary btn-new-student btn-lg">Новый студент</button>`;
     },
 
     newStudentClick: function() {

@@ -46,6 +46,10 @@ window.controllerStudents = {
         CMD_INIT: 0,
         CMD_CREATE_STUDENT: 1,
         CMD_REPAINT_TABLE_STUDENTS: 2,
+        CMD_ORDER_STUDENTS_BY_FIO: 3,
+        CMD_ORDER_STUDENTS_BY_FAC: 4,
+        CMD_ORDER_STUDENTS_BY_AGE: 5,
+        CMD_ORDER_STUDENTS_BY_START: 6,
     },
 
     model: null,
@@ -68,7 +72,18 @@ window.controllerStudents = {
             case this.commands.CMD_REPAINT_TABLE_STUDENTS:
                 this.view.showTable(document.querySelector('.table-container'), cmdData);;
                 return;
-
+            case this.commands.CMD_ORDER_STUDENTS_BY_FIO:
+                this.model.orderStudentsByFIO();
+                return;
+            case this.commands.CMD_ORDER_STUDENTS_BY_FAC:
+                this.model.orderStudentsByFac();
+                return;
+            case this.commands.CMD_ORDER_STUDENTS_BY_AGE:
+                this.model.orderStudentsByAge();
+                return;
+            case this.commands.CMD_ORDER_STUDENTS_BY_START:
+                this.model.orderStudentsByStart();
+                return;
         }
     },
 };
