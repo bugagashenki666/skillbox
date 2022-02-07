@@ -1,3 +1,3 @@
 (function() {
-    controllerStudents.execute(modelStudents, viewStudents);
+    controllerStudents.execute(controllerStudents.commands.CMD_INIT, modelStudents.students, modelStudents, viewStudents);
 })();

@@ -24,60 +24,68 @@ window.viewStudents = {
 
     FORM_CREATE_STUDENT: `<form class="row mb-3">
 									<fieldset>
-									<legend>Новый студент</legend>
-									<div class="mb-3 row">
-                    <label for="fname" class="col-sm-2 col-form-label">Имя*</label>
-										<div class="col-sm-10 w-50">
-											<input type="text" class="new-first-name form-control w-50" placeholder="Имя*" id="fname" name="fname" required>
+										<legend>Новый студент</legend>
+										<div class="mb-3 row">
+                    	<label for="fname" class="col-sm-2 col-form-label">Имя*</label>
+											<div class="col-sm-10 w-50">
+												<input type="text" class="new-first-name form-control w-50" placeholder="Имя*" id="fname" name="fname" required>
+											</div>
+											<div class="col-sm-10 text-danger error-fname w-25">
+											</div>
 										</div>
-										<div class="col-sm-10 text-danger error-fname w-25">
+										<div class="mb-3 row">
+											<label for="patronymic" class="col-sm-2 col-form-label">Отчество*</label>
+											<div class="col-sm-10 w-50">
+												<input type="text" class="new-patronymic form-control w-50" placeholder="Отчество*" id="patronymic" name="patronymic" required>
+											</div>
+											<div class="col-sm-10 w-25 text-danger error-patronymic">
+											</div>
 										</div>
-									</div>
-									<div class="mb-3 row">
-									<label for="patronymic" class="col-sm-2 col-form-label">Отчество*</label>
-									<div class="col-sm-10 w-50">
-										<input type="text" class="new-patronymic form-control w-50" placeholder="Отчество*" id="patronymic" name="patronymic" required>
-									</div>
-									<div class="col-sm-10 w-25 text-danger error-patronymic">
+										<div class="mb-3 row">
+											<label for="lname" class="col-sm-2 col-form-label">Фамилия*</label>
+											<div class="col-sm-10 w-50">
+												<input type="text" class="new-last-name form-control w-50" placeholder="Фамилия*" id="lname" name="lname" required>
+											</div>
+											<div class="col-sm-10 w-25 text-danger error-lname">
+											</div>
 										</div>
-									</div>
-									<div class="mb-3 row">
-									<label for="lname" class="col-sm-2 col-form-label">Фамилия*</label>
-									<div class="col-sm-10 w-50">
-										<input type="text" class="new-last-name form-control w-50" placeholder="Фамилия*" id="lname" name="lname" required>
-									</div>
-									<div class="col-sm-10 w-25 text-danger error-lname">
+										<div class="mb-3 row">
+											<label for="born" class="col-sm-2 col-form-label">Дата рождения*</label>
+											<div class="col-sm-10 w-50">
+												<input type="date" class="new-born-date form-control w-25" placeholder="дата рождения*" id="born" name="born" value="2000-01-01" min="1900-01-01" max="` + formatDate(new Date(), '-', 'desc') + `" required>
+											</div>
+											<div class="col-sm-10 w-25 text-danger error-born-date">
+											</div>
 										</div>
-									</div>
-									<div class="mb-3 row">
-									<label for="born" class="col-sm-2 col-form-label">Дата рождения*</label>
-									<div class="col-sm-10 w-50">
-										<input type="date" class="new-born-date form-control w-25" placeholder="дата рождения*" id="born" name="born" value="2000-01-01" min="1900-01-01" max="` + formatDate(new Date(), '-', 'desc') + `" required>
-									</div>
-									<div class="col-sm-10 w-25 text-danger error-born-date">
+										<div class="mb-3 row">
+											<label for="start" class="col-sm-2 col-form-label">Год начала обучения*</label>
+											<div class="col-sm-10 w-50">
+												<input type="number" class="new-start-year form-control w-25" name="start" min="2000" max="` + new Date().getFullYear() + `" placeholder="Год начала обучения*" id="start" value="2010" required>
+											</div>
+											<div class="col-sm-10 w-25 text-danger error-start-year">
+											</div>
 										</div>
-									</div>
-									<div class="mb-3 row">
-									<label for="start" class="col-sm-2 col-form-label">Год начала обучения*</label>
-									<div class="col-sm-10 w-50">
-										<input type="number" class="new-start-year form-control w-25" name="start" min="2000" max="` + new Date().getFullYear() + `" placeholder="Год начала обучения*" id="start" value="2010" required>
-									</div>
-									<div class="col-sm-10 w-25 text-danger error-start-year">
+										<div class="mb-3 row">
+											<label for="fac" class="col-sm-2 col-form-label">Факультет*</label>
+											<div class="col-sm-10 w-50">
+												<input type="text" class="new-facultet form-control w-50" placeholder="Факультет*" id="fac" name="fac" required>
+											</div>
+											<div class="col-sm-10 w-25 text-danger error-fac">
+											</div>
 										</div>
-									</div>
-									<div class="mb-3 row">
-									<label for="fac" class="col-sm-2 col-form-label">Факультет*</label>
-									<div class="col-sm-10 w-50">
-										<input type="text" class="new-facultet form-control w-50" placeholder="Факультет*" id="fac" name="fac" required>
-									</div>
-									<div class="col-sm-10 w-25 text-danger error-fac">
+										<div class="mb-3">
+											<button type="submit" class="btn btn-primary mb-3 btn-create-new-student w-25 btn-lg">Создать</button>
 										</div>
-									</div>
-									<div class="mb-3">
-										<button type="submit" class="btn btn-primary mb-3 btn-create-new-student w-25 btn-lg">Создать</button>
-									</div>
 									</fieldset>
 		</form>`,
+
+    FILTERS: `<div class="input-group mb-5 p-3">
+								<span class="input-group-text">ФИО, факультет, даты начала и окончания обучения</span>
+								<input type="text" placeholder="ФИО" aria-label="fio" class="form-control filter-fio">
+								<input type="text" placeholder="Факультет" aria-label="fac" class="form-control filter-fac">
+								<input type="number" placeholder="дата начала обучения" aria-label="start" class="form-control filter-start" min="2000" max="` + new Date().getFullYear() + `">
+								<input type="number" placeholder="дата окончания обучения" aria-label="finish" class="form-control filter-finish" min="2000" max="` + new Date().getFullYear() + `">
+							</div>`,
 
     getValueName: function(amount) {
         let lastCharAmount = String(amount).substring(String(amount).length - 1, String(amount).length);
@@ -156,13 +164,38 @@ window.viewStudents = {
 								<td>${studentData.fac}</td>
 								<td>${formatDate(studentData.bornDate)}
                                 (${amountFullYears} ${this.getValueName(amountFullYears)})</td>
-								<td>${studentData.startYear}-${studentData.startYear + 4} 
+								<td>${studentData.startYear}-${(studentData.startYear + 4)} 
 										(${this.isEducated(studentData.startYear)})</td>
 				</tr>`;
     },
 
-    showFilter: function() {
+    showFilters: function(container) {
 
+        container.innerHTML = this.renderFilters();
+        this.setHandler(container.querySelector('.filter-fio'), 'input', this.inputFilterFIO);
+        this.setHandler(container.querySelector('.filter-fac'), 'input', this.inputFilterFac);
+        this.setHandler(container.querySelector('.filter-start'), 'input', this.inputFilterStart);
+        this.setHandler(container.querySelector('.filter-finish'), 'input', this.inputFilterFinish);
+    },
+
+    renderFilters: function() {
+        return this.FILTERS;
+    },
+
+    inputFilterFIO: function() {
+        console.log('inputFilterFIO');
+    },
+
+    inputFilterFac: function() {
+        console.log('inputFilterFac');
+    },
+
+    inputFilterStart: function() {
+        console.log('inputFilterStart');
+    },
+
+    inputFilterFinish: function() {
+        console.log('inputFilterFinish');
     },
 
     showButtonNewStudent: function(container) {
@@ -201,7 +234,8 @@ window.viewStudents = {
             viewStudents.showMistakes(error);
             return;
         }
-        viewStudents.controller.createNewStudent(dataNewStudent);
+        viewStudents.controller.execute(viewStudents.controller.commands.CMD_CREATE_STUDENT,
+            dataNewStudent);
         viewStudents.showButtonNewStudent(document.querySelector('.form-new-student-container'));
     },
 
@@ -226,8 +260,9 @@ window.viewStudents = {
             patr: patronymic.value,
             lname: lastName.value,
             born: newBorn.value,
-            scratch: start.value,
+            scratch: parseInt(start.value),
             facultet: fac.value,
         };
     },
+
 };

@@ -29,8 +29,8 @@ window.controllerStudents = {
                 error.fac = 'Факультет обязателен для заполнения';
                 error.mistaken = true;
             }
-            if (start.getFullYear() < 2000 ||
-                start.getFullYear() > now.getFullYear()) {
+            if (start < 2000 ||
+                start > now.getFullYear()) {
                 error.start = "год начала обучения должен быть не менее 2000 и не более " + now.getFullYear() + ". вы ввели " + start.getFullYear();
                 error.mistaken = true;
             }
@@ -42,14 +42,33 @@ window.controllerStudents = {
         }
     },
 
-
-    execute: function(model, view) {
-        view.setController(this);
-        view.showTable(document.querySelector('.table-container'), model.students);
-        view.showButtonNewStudent(document.querySelector('.form-new-student-container'));
+    commands: {
+        CMD_INIT: 0,
+        CMD_CREATE_STUDENT: 1,
+        CMD_REPAINT_TABLE_STUDENTS: 2,
     },
 
-    createNewStudent: function(data) {
+    model: null,
+    view: null,
 
+    execute: function(cmd, cmdData = null, model = null, view = null) {
+        switch (cmd) {
+            case this.commands.CMD_INIT:
+                this.model = model;
+                this.view = view;
+                view.setController(this);
+                model.setController(this);
+                view.showFilters(document.querySelector('.filter-container'));
+                view.showTable(document.querySelector('.table-container'), cmdData);
+                view.showButtonNewStudent(document.querySelector('.form-new-student-container'));
+                return;
+            case this.commands.CMD_CREATE_STUDENT:
+                this.model.createStudent(cmdData);
+                return;
+            case this.commands.CMD_REPAINT_TABLE_STUDENTS:
+                this.view.showTable(document.querySelector('.table-container'), cmdData);;
+                return;
+
+        }
     },
 };

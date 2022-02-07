@@ -25,4 +25,21 @@ window.modelStudents = {
         },
     ],
 
+    controller: null,
+
+    setController: function(controller) {
+        this.controller = controller;
+    },
+
+    createStudent: function(data) {
+        this.students.push({
+            firstName: data.fname,
+            patronymic: data.patr,
+            lastName: data.lname,
+            bornDate: new Date(data.born),
+            startYear: data.scratch,
+            fac: data.facultet,
+        });
+        this.controller.execute(this.controller.commands.CMD_REPAINT_TABLE_STUDENTS, this.students);
+    },
 };
