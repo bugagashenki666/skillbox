@@ -26,51 +26,51 @@ window.viewStudents = {
 									<fieldset>
 										<legend>Новый студент</legend>
 										<div class="mb-3 row">
-                    	<label for="fname" class="col-sm-2 col-form-label">Имя*</label>
-											<div class="col-sm-10 w-50">
-												<input type="text" class="new-first-name form-control w-50" placeholder="Имя*" id="fname" name="fname" required>
+                    	                    <label for="fname" class="col-sm-2 col-form-label">Имя*</label>
+											<div class="col-md-4">
+												<input type="text" class="new-first-name form-control" placeholder="Имя*" id="fname" name="fname" required>
 											</div>
-											<div class="col-sm-10 text-danger error-fname w-25">
+											<div class="col-md-6 text-danger error-fname">
 											</div>
 										</div>
 										<div class="mb-3 row">
 											<label for="patronymic" class="col-sm-2 col-form-label">Отчество*</label>
-											<div class="col-sm-10 w-50">
-												<input type="text" class="new-patronymic form-control w-50" placeholder="Отчество*" id="patronymic" name="patronymic" required>
+											<div class="col-md-4">
+												<input type="text" class="new-patronymic form-control" placeholder="Отчество*" id="patronymic" name="patronymic" required>
 											</div>
-											<div class="col-sm-10 w-25 text-danger error-patronymic">
+											<div class="col-md-6 text-danger error-patronymic">
 											</div>
 										</div>
 										<div class="mb-3 row">
 											<label for="lname" class="col-sm-2 col-form-label">Фамилия*</label>
-											<div class="col-sm-10 w-50">
-												<input type="text" class="new-last-name form-control w-50" placeholder="Фамилия*" id="lname" name="lname" required>
+											<div class="col-md-4">
+												<input type="text" class="new-last-name form-control" placeholder="Фамилия*" id="lname" name="lname" required>
 											</div>
-											<div class="col-sm-10 w-25 text-danger error-lname">
+											<div class="col-md-6 text-danger error-lname">
 											</div>
 										</div>
 										<div class="mb-3 row">
 											<label for="born" class="col-sm-2 col-form-label">Дата рождения*</label>
-											<div class="col-sm-10 w-50">
-												<input type="date" class="new-born-date form-control w-25" placeholder="дата рождения*" id="born" name="born" value="2000-01-01" min="1900-01-01" max="` + formatDate(new Date(), '-', 'desc') + `" required>
+											<div class="col-md-2">
+												<input type="date" class="new-born-date form-control" placeholder="дата рождения*" id="born" name="born" value="2000-01-01" min="1900-01-01" max="` + formatDate(new Date(), '-', 'desc') + `" required>
 											</div>
-											<div class="col-sm-10 w-25 text-danger error-born-date">
+											<div class="col-md-6 text-danger error-born-date">
 											</div>
 										</div>
 										<div class="mb-3 row">
 											<label for="start" class="col-sm-2 col-form-label">Год начала обучения*</label>
-											<div class="col-sm-10 w-50">
-												<input type="number" class="new-start-year form-control w-25" name="start" min="2000" max="` + new Date().getFullYear() + `" placeholder="Год начала обучения*" id="start" value="2010" required>
+											<div class="col-md-2">
+												<input type="number" class="new-start-year form-control" name="start" min="2000" max="` + new Date().getFullYear() + `" placeholder="Год начала обучения*" id="start" value="2010" required>
 											</div>
-											<div class="col-sm-10 w-25 text-danger error-start-year">
+											<div class="col-md-6 text-danger error-start-year">
 											</div>
 										</div>
 										<div class="mb-3 row">
 											<label for="fac" class="col-sm-2 col-form-label">Факультет*</label>
-											<div class="col-sm-10 w-50">
-												<input type="text" class="new-facultet form-control w-50" placeholder="Факультет*" id="fac" name="fac" required>
+											<div class="col-md-4">
+												<input type="text" class="new-facultet form-control" placeholder="Факультет*" id="fac" name="fac" required>
 											</div>
-											<div class="col-sm-10 w-25 text-danger error-fac">
+											<div class="col-md-6 text-danger error-fac">
 											</div>
 										</div>
 										<div class="mb-3">
@@ -83,8 +83,8 @@ window.viewStudents = {
 								<span class="input-group-text">ФИО, факультет, даты начала и окончания обучения</span>
 								<input type="text" placeholder="ФИО" aria-label="fio" class="form-control filter-fio">
 								<input type="text" placeholder="Факультет" aria-label="fac" class="form-control filter-fac">
-								<input type="number" placeholder="дата начала обучения" aria-label="start" class="form-control filter-start" min="2000" max="` + new Date().getFullYear() + `">
-								<input type="number" placeholder="дата окончания обучения" aria-label="finish" class="form-control filter-finish" min="2000" max="` + new Date().getFullYear() + `">
+								<input type="number" placeholder="дата начала обучения" aria-label="start" class="form-control filter-start" min="1900" max="` + new Date().getFullYear() + `">
+								<input type="number" placeholder="дата окончания обучения" aria-label="finish" class="form-control filter-finish" min="1904" max="` + (new Date().getFullYear() + 4) + `">
 							</div>`,
 
     getValueName: function(amount) {
@@ -180,30 +180,27 @@ window.viewStudents = {
     showFilters: function(container) {
 
         container.innerHTML = this.renderFilters();
-        this.setHandler(container.querySelector('.filter-fio'), 'input', this.inputFilterFIO);
-        this.setHandler(container.querySelector('.filter-fac'), 'input', this.inputFilterFac);
-        this.setHandler(container.querySelector('.filter-start'), 'input', this.inputFilterStart);
-        this.setHandler(container.querySelector('.filter-finish'), 'input', this.inputFilterFinish);
+        this.setHandler(container.querySelector('.filter-fio'), 'input', this.inputFilter);
+        this.setHandler(container.querySelector('.filter-fac'), 'input', this.inputFilter);
+        this.setHandler(container.querySelector('.filter-start'), 'input', this.inputFilter);
+        this.setHandler(container.querySelector('.filter-finish'), 'input', this.inputFilter);
     },
 
     renderFilters: function() {
         return this.FILTERS;
     },
 
-    inputFilterFIO: function() {
+    inputFilter: function() {
         console.log('inputFilterFIO');
-    },
-
-    inputFilterFac: function() {
-        console.log('inputFilterFac');
-    },
-
-    inputFilterStart: function() {
-        console.log('inputFilterStart');
-    },
-
-    inputFilterFinish: function() {
-        console.log('inputFilterFinish');
+        let fio = document.querySelector('.filter-fio').value.trim().toLowerCase();
+        let fac = document.querySelector('.filter-fac').value.trim().toLowerCase();
+        let start = parseInt(document.querySelector('.filter-start').value);
+        let finish = parseInt(document.querySelector('.filter-finish').value);
+        controllerStudents.filter.fio = fio;
+        controllerStudents.filter.fac = fac;
+        controllerStudents.filter.start = (start >= 2000 && start <= new Date().getFullYear()) && start !== '' ? start : null;
+        controllerStudents.filter.finish = (finish >= 2004 && finish <= new Date().getFullYear() + 4) && finish !== '' ? finish : null;
+        controllerStudents.execute(controllerStudents.commands.CMD_FILTER);
     },
 
     showButtonNewStudent: function(container) {

@@ -31,15 +31,22 @@ window.controllerStudents = {
             }
             if (start < 2000 ||
                 start > now.getFullYear()) {
-                error.start = "год начала обучения должен быть не менее 2000 и не более " + now.getFullYear() + ". вы ввели " + start.getFullYear();
+                error.start = "год начала обучения должен быть не менее 2000 и не более " + now.getFullYear() + ". вы ввели " + data.scratch;
                 error.mistaken = true;
             }
             if (born < new Date(1900, 0, 1) || born > new Date()) {
                 error.mistaken = true;
-                error.born = "Дата рождения не должна быть раньше 01.01.1900 и позднее " + formatDate(now) + ". вы ввели " + formatDate(start);
+                error.born = "Дата рождения не должна быть раньше 01.01.1900 и позднее " + formatDate(now) + ". вы ввели " + data.born;
             }
             return error;
         }
+    },
+
+    filter: {
+        fio: '',
+        fac: '',
+        start: null,
+        finish: null,
     },
 
     commands: {
@@ -50,6 +57,7 @@ window.controllerStudents = {
         CMD_ORDER_STUDENTS_BY_FAC: 4,
         CMD_ORDER_STUDENTS_BY_AGE: 5,
         CMD_ORDER_STUDENTS_BY_START: 6,
+        CMD_FILTER: 7,
     },
 
     model: null,
@@ -83,6 +91,9 @@ window.controllerStudents = {
                 return;
             case this.commands.CMD_ORDER_STUDENTS_BY_START:
                 this.model.orderStudentsByStart();
+                return;
+            case this.commands.CMD_FILTER:
+                this.model.filter(this.filter);
                 return;
         }
     },

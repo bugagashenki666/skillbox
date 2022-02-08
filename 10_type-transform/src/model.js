@@ -83,4 +83,28 @@ window.modelStudents = {
             });
         this.controller.execute(this.controller.commands.CMD_REPAINT_TABLE_STUDENTS, result);
     },
+
+    filter: function(filter) {
+        const fio = filter.fio;
+        const fac = filter.fac;
+        const start = filter.start;
+        const finish = filter.finish;
+
+        let result = this.students.
+        slice().
+        filter(
+            function(studs) {
+                let fullName = `${studs.lastName} ${studs.firstName} ${studs.patronymic}`;
+                if (fio !== '')
+                    if (!fullName.toLowerCase().includes(fio)) return false;
+                if (fac !== '')
+                    if (!studs.fac.toLowerCase().includes(fac)) return false;
+                if (start !== null)
+                    if (start !== studs.startYear) return false;
+                if (finish !== null)
+                    if (finish !== studs.startYear + 4) return false;
+                return true;
+            });
+        this.controller.execute(this.controller.commands.CMD_REPAINT_TABLE_STUDENTS, result);
+    },
 };
