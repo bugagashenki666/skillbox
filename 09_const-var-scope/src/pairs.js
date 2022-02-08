@@ -135,18 +135,34 @@ document.addEventListener('DOMContentLoaded', () => {
         let input = document.createElement('input');
         input.type = 'number';
         input.value = 4;
-		input.max = 16;
-		input.min = 2;
+        input.max = 16;
+        input.min = 2;
+        input.step = 2;
         let btn = document.createElement('button');
         btn.textContent = 'Начать игру';
         form.append(input);
         form.append(btn);
         document.querySelector('.container').append(form);
-        input.onchange = function() {
+        input.oninput = function() {
+            btn.setAttribute('disabled', true);
             setTimeout(() => {
-                if (input.value < 2 || input.value > 16 || input.value % 2 === 1) input.value = 4;
-            }, 600);
+                if (input.value % 2 === 1) {
+                    input.value = parseInt(input.value) + 1;
+                }
+                if (input.value < 2) {
+                    input.value = 2;
+                }
+                if (input.value > 16) {
+                    input.value = 16;
+                }
+                btn.removeAttribute('disabled');
+            }, 400);
         };
+
+        input.onchange = function() {
+            btn.removeAttribute('disabled');
+        };
+
         btn.onclick = () => {
             let n = input.value;
             document.querySelector('.container').innerHTML = '';
