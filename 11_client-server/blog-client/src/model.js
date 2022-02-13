@@ -1,4 +1,6 @@
 window.modelBlog = {
     articles: [],
-    nav: {},
+    nav: {
+        currentPage: 1,
+    },
 };

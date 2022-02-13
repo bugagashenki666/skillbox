@@ -11,7 +11,7 @@ window.controllerBlog = {
     dispatchCmd: function(cmd, data = null, view = null, model = null) {
         switch (cmd) {
             case this.CMDS.CMD_INIT:
-                this.initArticles(view, model);
+                this.initArticles(view, model, data);
                 return;
             case this.CMDS.CMD_INIT_POST:
                 this.initPost(data, view, model);
@@ -19,10 +19,10 @@ window.controllerBlog = {
         }
     },
 
-    initArticles: async function(view, model) {
+    initArticles: async function(view, model, pageN) {
         this.view = view;
         this.model = model;
-        const data = await window.controllerBlog.getArticlesPages(1);
+        const data = await window.controllerBlog.getArticlesPages(pageN ? pageN : 1);
         const articles = data.data;
         const nav = data.meta.pagination;
         view.showListOfArticles(articles, nav);
@@ -31,12 +31,12 @@ window.controllerBlog = {
         model.nav = nav;
     },
 
-    initPost: async function(id, view, model) {
+    initPost: async function(data, view, model) {
         this.view = view;
         this.model = model;
-        const post = await this.getArticleDetailed(id);
-        const comments = await this.getArticleComments(id);
-        this.view.showPost(post.data, comments.data);
+        const post = await this.getArticleDetailed(data.postId);
+        const comments = await this.getArticleComments(data.postId);
+        this.view.showPost(post.data, comments.data, data.pageBack);
     },
 
     getArticlesPages: async function(pageN) {
