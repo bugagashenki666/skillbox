@@ -1,0 +1,4 @@
+window.modelBlog = {
+    articles: [],
+    nav: {},
+};
