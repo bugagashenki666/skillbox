@@ -3,14 +3,34 @@ window.viewBlog = {
     showListOfArticles: function(data, nav) {
         let container = document.querySelector('.container');
         container.innerHTML = this.renderListOfArticles(data, nav);
-        this.setHandlersArticleLinks(data);
-    },
 
-    setHandlersArticleLinks: function(data) {},
+    },
 
     showNavigator: function(nav) {
         let container = document.querySelector('.container');
-        container.innerHTML += this.renderNavigator(nav);
+        container.innerHTML += this.renderNavigatorOptimized(nav) + this.renderNavigator(nav);
+    },
+
+    renderNavigatorOptimized: function(nav, n = 5) {
+        let navigator = `<nav class="d-flex mb-3 flex-wrap justify-content-center">`;
+        let lLimit = nav.page - n;
+        let hLimit = nav.page + n;
+        if (lLimit < 0) lLimit = 0;
+        if (hLimit > nav.pages) hLimit = nav.pages;
+        let linkMinus10 = (nav.page - n * 2) <= 0 ? '' : `?page=${(nav.page - n * 2)}`;
+        let classLink = ` class="${nav.page === 1?'btn btn-info disabled':''}"`;
+        navigator += `<a href="index.html" ${classLink}><<</a>|
+				<a href="index.html${linkMinus10}"  ${classLink}><</a>|`;
+        for (let i = lLimit; i < hLimit; i++) {
+            let link = (i === 0) ? `">1` : `?page=${i + 1}">${i + 1}`;
+            navigator += `<a class="${nav.page===i+1?'btn btn-info disabled':''}"
+						 href="index.html${link}</a>  |`;
+        }
+        classLink = ` class="${nav.page === nav.pages?'btn btn-info disabled':''}"`;
+        navigator += `<a href="index.html?page=${(nav.page + n * 2) >= nav.pages?nav.pages:(nav.page + n * 2)}" ${classLink}>>
+				</a>|<a href="index.html?page=${nav.pages}"  ${classLink}>>></a>|`;
+        navigator += `</nav>`;
+        return navigator;
     },
 
     renderNavigator: function(nav) {
